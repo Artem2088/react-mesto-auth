@@ -1,0 +1,14 @@
+.footer {
+  box-sizing: border-box;
+  width: calc((100vw - 320px) / (1280 - 320) * (880 - 320) + 300px);
+  padding-left: calc((100vw - 320px) / (1280 - 320) * (0 - 19) + 19px);
+  padding-bottom: calc((100vw - 320px) / (1280 - 320) * (60 - 36) + 36px);
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 1280px) {
+  .footer {
+    width: 880px;
+    padding-bottom: 60px;
+  }
+}
