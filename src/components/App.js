@@ -73,14 +73,6 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    handleOpenInfoTooltip();
-  }, []);
-
-  useEffect(() => {
-    handleEmail();
-  }, [setLoggedIn]);
-
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     if (!isLiked) {
@@ -189,6 +181,7 @@ function App() {
     Auth.login(email, password)
       .then((res) => {
         localStorage.setItem("jwt", res.token);
+        setIsInfoTooltip(false);
         setLoggedIn(true);
         setIsEmail(email);
         navigate("/");
