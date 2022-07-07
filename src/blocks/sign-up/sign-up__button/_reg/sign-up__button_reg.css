@@ -1,0 +1,16 @@
+.sign-up__button_reg {
+    display: block;
+  width: 358px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 1);
+  margin: 0 auto;
+  padding: 0;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.sign-up__button_reg:hover {
+  background: #ccc
+}

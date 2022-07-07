@@ -1,0 +1,8 @@
+.sign-up__fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 50px 0 216px;
+    border: none;
+}

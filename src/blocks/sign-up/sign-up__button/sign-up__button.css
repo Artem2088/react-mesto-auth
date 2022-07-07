@@ -1,0 +1,15 @@
+.sign-up__button {
+  width: 53px;
+  height: 22px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height, or 122% */
+  text-align: right;
+  color: #ffffff;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}

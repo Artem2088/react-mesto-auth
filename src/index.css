@@ -52,3 +52,33 @@
 @import url(./blocks/popup/__content/popup__content.css);
 @import url(./blocks/popup/__image/popup__image.css);
 @import url(./blocks/popup/__description/popup__description.css);
+
+@import url(./blocks/sign-up/sign-up.css);
+@import url(./blocks/sign-up/sign-up__container/sign-up__container.css);
+@import url(./blocks/sign-up/sign-up__button/sign-up__button.css);
+@import url(./blocks/sign-up/sign-up__title/sign-up__title.css);
+@import url(./blocks/sign-up/sign-up__fieldset/sign-up__fieldset.css);
+@import url(./blocks/sign-up/sign-up__input/sign-up__input.css);
+@import url(./blocks/sign-up/sign-up__button/_reg/sign-up__button_reg.css);
+@import url(./blocks/sign-up/sign-up__description/sign-up__description.css);
+@import url(./blocks/sign-up/sign-up__button/_enter/sign-up__button_enter.css);
+
+@import url(./blocks/log-in/log-in.css);
+@import url(./blocks/log-in/log-in__button/log-in__button.css);
+@import url(./blocks/log-in/log-in__button/_ent/log-in__button_ent.css);
+@import url(./blocks/log-in/log-in__container/log-in__container.css);
+@import url(./blocks/log-in/log-in__fieldset/log-in__fieldset.css);
+@import url(./blocks/log-in/log-in__input/log-in__input.css);
+@import url(./blocks/log-in/log-in__title/log-in__title.css);
+
+@import url(./blocks/popup/__container/_ok/popup__container_ok.css);
+@import url(./blocks/popup/__title/_ok/popup__title_ok.css);
+@import url(./blocks/popup/__image/_imageOk/popup__image_imageOk.css);
+
+@import url(./blocks/popup/__container/_ng/popup__container_ng.css);
+@import url(./blocks/popup/__image/_imageNg/popup__image_imageNg.css);
+@import url(./blocks/popup/__title/_ng/popup__title_ng.css);
+
+@import url(./blocks/header/__link/header__link.css);
+@import url(./blocks/header/__button/header__button.css);
+@import url(./blocks/header/__container/header__container.css);

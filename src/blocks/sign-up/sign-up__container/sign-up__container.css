@@ -1,0 +1,18 @@
+.sign-up__container {
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    width: calc((100vw - 320px) / (1280 - 320) * (880 - 320) + 300px);
+    margin: 0 auto;
+    padding-bottom: calc((100vw - 320px) / (1280 - 320) * (35 - 30) + 28px);
+    padding-top: calc((100vw - 320px) / (1280 - 320) * (45 - 28) + 28px);
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  }
+  
+  @media screen and (min-width: 1280px) {
+    .sign-up__container {
+      width: 880px;
+      padding-bottom: 40px;
+      padding-top: 45px;
+    }
+  }

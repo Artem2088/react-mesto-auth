@@ -1,0 +1,16 @@
+.log-in__button_ent {
+    display: block;
+  width: 358px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 1);
+  margin: 0 auto;
+  padding: 0;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.log-in__button_ent:hover {
+  background: #ccc
+}
