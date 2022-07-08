@@ -15,7 +15,7 @@ import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
-import * as Auth from "./Auth";
+import * as Auth from "../utils/Auth";
 import imageOk from "../images/Image-OK.svg";
 import imageNg from "../images/image-NG.svg";
 
@@ -27,23 +27,21 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState([]);
   const [elements, setElements] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setisLoggedIn] = useState(false);
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
-  const [isImage, setIsImage] = useState("");
-  const [isTitle, setIsTitle] = useState("");
+  const [image, setImage] = useState("");
+  const [title, setTitle] = useState("");
   const [isEmail, setIsEmail] = useState(false);
 
   useEffect(() => {
-    Api.getUserInfo()
+    if(!isLoggedIn) { 
+      Api.getUserInfo()
       .then((avatar, name, about) => {
         setCurrentUser(avatar, name, about);
       })
       .catch((err) => {
         console.error(err);
       });
-  }, []);
-
-  useEffect(() => {
     Api.getInitialCards()
       .then((data) => {
         setElements(data);
@@ -51,6 +49,7 @@ function App() {
       .catch((err) => {
         console.error(err);
       });
+    }
   }, []);
 
   useEffect(() => {
@@ -59,15 +58,15 @@ function App() {
       Auth.checkToken(jwt)
         .then((res) => {
           if (res) {
-            setLoggedIn(true);
+            setisLoggedIn(true);
             navigate("/");
             setIsInfoTooltip(false);
-            setIsEmail();
+            setIsEmail(res.data.email);
           }
         })
         .catch(() => {
-          setIsImage(imageNg);
-          setIsTitle("Что-то пошло не так! Попробуйте ещё раз.");
+          setImage(imageNg);
+          setTitle("Что-то пошло не так! Попробуйте ещё раз.");
           handleOpenInfoTooltip();
         });
     }
@@ -160,19 +159,16 @@ function App() {
 
   const onRegister = (email, password) => {
     Auth.register(email, password)
-      .then((data) => {
-        setIsImage(imageOk);
-        setIsTitle("Вы успешно зарегистрировались!");
-        if (data.jwt) {
-          localStorage.setItem("jwt", data.jwt);
-        }
-        setLoggedIn(true);
+      .then(() => {
+        setImage(imageOk);
+        setTitle("Вы успешно зарегистрировались!");
+        setisLoggedIn(true);
         navigate("/signin");
       })
       .catch((err) => {
         console.error(err);
-        setIsImage(imageNg);
-        setIsTitle("Что-то пошло не так! Попробуйте ещё раз.");
+        setImage(imageNg);
+        setTitle("Что-то пошло не так! Попробуйте ещё раз.");
       })
       .finally(handleOpenInfoTooltip);
   };
@@ -182,27 +178,27 @@ function App() {
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsInfoTooltip(false);
-        setLoggedIn(true);
-        setIsEmail(email);
+        setisLoggedIn(true);
+        handleEmail(email);
         navigate("/");
       })
       .catch((err) => {
         handleOpenInfoTooltip();
-        setIsImage(imageNg);
-        setIsTitle("Что-то пошло не так! Попробуйте ещё раз.");
+        setImage(imageNg);
+        setTitle("Что-то пошло не так! Попробуйте ещё раз.");
         console.error(err);
       });
   };
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
-    setLoggedIn(false);
+    setisLoggedIn(false);
     setIsEmail(false);
     navigate("/signin");
   };
 
-  const handleEmail = () => {
-    setIsEmail(true);
+  const handleEmail = (email) => {
+    setIsEmail(email);
   };
 
   //функции закрытия попапов
@@ -212,12 +208,6 @@ function App() {
     setisEditAvatarPopupOpen(false);
     setIsInfoTooltip(false);
     setSelectedCard({});
-  };
-
-  const handlePopupClose = (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closeAllPopups();
-    }
   };
 
   return (
@@ -238,7 +228,7 @@ function App() {
                   <Header handleLogout={handleLogout} email={isEmail} />
                   <ProtectedRoute
                     component={Main}
-                    loggedIn={loggedIn}
+                    loggedIn={isLoggedIn}
                     onEditProfile={handleEditProfileClick}
                     onAddPlace={handleAddPlaceClick}
                     onEditAvatar={handleEditAvatarClick}
@@ -253,7 +243,7 @@ function App() {
             />
             <Route
               path="*"
-              element={<Navigate to={loggedIn ? "/" : "/signin"} />}
+              element={<Navigate to={isLoggedIn ? "/" : "/signin"} />}
             />
           </Routes>
 
@@ -261,7 +251,6 @@ function App() {
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-            onClosePopup={handlePopupClose}
           />
 
           <AddPlacePopup
@@ -283,8 +272,8 @@ function App() {
           <InfoTooltip
             isOpen={isInfoTooltip}
             onClose={closeAllPopups}
-            image={isImage}
-            title={isTitle}
+            image={image}
+            title={title}
           />
         </div>
       </div>

@@ -13,7 +13,6 @@ function Main({
   onCardDelete,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  
 
   return (
     <main className="content">
@@ -23,12 +22,8 @@ function Main({
           className="profile__avatar-edit"
           type="button"
           title="Обновить аватар"
-        
         ></button>
-          <img
-            className="profile__avatar"
-            src={currentUser.avatar}
-          />
+        <img className="profile__avatar" src={currentUser.avatar} />
         <div className="profile__info">
           <h1 className="profile__name">{currentUser.name}</h1>
           <button
