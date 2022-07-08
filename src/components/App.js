@@ -34,23 +34,23 @@ function App() {
   const [isEmail, setIsEmail] = useState(false);
 
   useEffect(() => {
-    if(!isLoggedIn) { 
+    if (isLoggedIn) {
       Api.getUserInfo()
-      .then((avatar, name, about) => {
-        setCurrentUser(avatar, name, about);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    Api.getInitialCards()
-      .then((data) => {
-        setElements(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+        .then((avatar, name, about) => {
+          setCurrentUser(avatar, name, about);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      Api.getInitialCards()
+        .then((data) => {
+          setElements(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
