@@ -1,3 +1,5 @@
+import { BASE_URL } from '../utils/Constants.js';
+
 function checkResponse(res) {
   if (res.ok) {
     return res.json();
@@ -5,11 +7,8 @@ function checkResponse(res) {
   return Promise.reject(`${res.status} ${res.statusText}`);
 }
 
-export const BASE_URL = 'domainname.artemyablonsky.nomoredomains.sbs';
-
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
-    // mode: 'no-cors',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

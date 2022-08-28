@@ -1,7 +1,9 @@
+import { BASE_URL } from '../utils/Constants.js';
+
 class Api {
-  constructor({ headers, baseUrl }) {
+  constructor({ headers, BASE_URL }) {
     this._headers = headers;
-    this._baseUrl = baseUrl;
+    this._BASE_URL = BASE_URL;
     this._jwt = null;
   }
 
@@ -22,7 +24,7 @@ class Api {
   }
 
   getUserInfo() {
-    const requestUrl = this._baseUrl + '/users/me';
+    const requestUrl = this._BASE_URL + '/users/me';
     return fetch(requestUrl, {
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -32,7 +34,7 @@ class Api {
   }
 
   getInitialCards() {
-    const requestUrl = this._baseUrl + '/cards';
+    const requestUrl = this._BASE_URL + '/cards';
     return fetch(requestUrl, {
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -46,7 +48,7 @@ class Api {
   }
 
   updateUserInfo(user) {
-    const requestUrl = this._baseUrl + '/users/me';
+    const requestUrl = this._BASE_URL + '/users/me';
     return fetch(requestUrl, {
       method: 'PATCH',
       headers: {
@@ -58,7 +60,7 @@ class Api {
   }
 
   addNewCard(body) {
-    const requestUrl = this._baseUrl + '/cards';
+    const requestUrl = this._BASE_URL + '/cards';
     return fetch(requestUrl, {
       method: 'POST',
       headers: {
@@ -70,7 +72,7 @@ class Api {
   }
 
   removeCard(cardId) {
-    const requestUrl = this._baseUrl + `/cards/${cardId}`;
+    const requestUrl = this._BASE_URL + `/cards/${cardId}`;
     return fetch(requestUrl, {
       method: 'DELETE',
       headers: {
@@ -81,7 +83,7 @@ class Api {
   }
 
   addCardLike(cardId) {
-    const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
+    const requestUrl = this._BASE_URL + `/cards/likes/${cardId}`;
     return fetch(requestUrl, {
       method: 'PUT',
       headers: {
@@ -92,7 +94,7 @@ class Api {
   }
 
   deleteCardLike(cardId) {
-    const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
+    const requestUrl = this._BASE_URL + `/cards/likes/${cardId}`;
     return fetch(requestUrl, {
       method: 'DELETE',
       headers: {
@@ -103,7 +105,7 @@ class Api {
   }
 
   updateProfileAvatar(user) {
-    const requestUrl = this._baseUrl + `/users/me/avatar`;
+    const requestUrl = this._BASE_URL + `/users/me/avatar`;
     return fetch(requestUrl, {
       method: 'PATCH',
       headers: {
@@ -116,7 +118,7 @@ class Api {
 }
 
 export default new Api({
-  baseUrl: 'domainname.artemyablonsky.nomoredomains.sbs',
+  BASE_URL,
   headers: {
     authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
