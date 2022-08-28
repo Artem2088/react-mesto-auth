@@ -2,6 +2,15 @@ class Api {
   constructor({ headers, baseUrl }) {
     this._headers = headers;
     this._baseUrl = baseUrl;
+    this._jwt = null;
+  }
+
+  setToken(jwt) {
+    this._jwt = jwt;
+    this._headers = {
+      ...this._headers,
+      authorization: `Bearer ${this._token}`,
+    };
   }
 
   _checkResponse(res) {
@@ -15,14 +24,20 @@ class Api {
   getUserInfo() {
     const requestUrl = this._baseUrl + '/users/me';
     return fetch(requestUrl, {
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
     }).then(this._checkResponse);
   }
 
   getInitialCards() {
     const requestUrl = this._baseUrl + '/cards';
     return fetch(requestUrl, {
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
     }).then(this._checkResponse);
   }
 
@@ -30,12 +45,15 @@ class Api {
     return Promise.all([this.getInitialCards(), this.getUserInfo()]);
   }
 
-  updateUserInfo(body) {
+  updateUserInfo(user) {
     const requestUrl = this._baseUrl + '/users/me';
     return fetch(requestUrl, {
       method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify(body),
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
     }).then(this._checkResponse);
   }
 
@@ -43,7 +61,10 @@ class Api {
     const requestUrl = this._baseUrl + '/cards';
     return fetch(requestUrl, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
     }).then(this._checkResponse);
   }
@@ -52,7 +73,10 @@ class Api {
     const requestUrl = this._baseUrl + `/cards/${cardId}`;
     return fetch(requestUrl, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
     }).then(this._checkResponse);
   }
 
@@ -60,7 +84,10 @@ class Api {
     const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
     return fetch(requestUrl, {
       method: 'PUT',
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
     }).then(this._checkResponse);
   }
 
@@ -68,24 +95,30 @@ class Api {
     const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
     return fetch(requestUrl, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
     }).then(this._checkResponse);
   }
 
-  updateProfileAvatar(body) {
+  updateProfileAvatar(user) {
     const requestUrl = this._baseUrl + `/users/me/avatar`;
     return fetch(requestUrl, {
       method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify(body),
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
     }).then(this._checkResponse);
   }
-
 }
+
 export default new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-40',
+  baseUrl: 'domainname.artemyablonsky.nomoredomains.sbs',
   headers: {
-    authorization: '5f9407a9-a0bd-4092-b98d-e17e22763f4f',
+    authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
   },
 });

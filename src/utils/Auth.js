@@ -5,13 +5,14 @@ function checkResponse(res) {
   return Promise.reject(`${res.status} ${res.statusText}`);
 }
 
-export const BASE_URL = "https://auth.nomoreparties.co";
+export const BASE_URL = 'domainname.artemyablonsky.nomoredomains.sbs';
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
-    method: "POST",
+    // mode: 'no-cors',
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
   }).then(checkResponse);
@@ -19,9 +20,9 @@ export const register = (email, password) => {
 
 export const login = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
   }).then(checkResponse);
@@ -29,9 +30,9 @@ export const login = (email, password) => {
 
 export const checkToken = (jwt) => {
   return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${jwt}`,
     },
   }).then(checkResponse);

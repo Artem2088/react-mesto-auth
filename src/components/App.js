@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
-import "../index.css";
-import Header from "./Header";
-import Main from "./Main";
-import Footer from "./Footer";
-import ImagePopup from "./ImagePopup";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import Api from "../utils/Api";
-import AddPlacePopup from "./AddPlacePopup";
-import EditImagePopup from "./EditImagePopup";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
-import InfoTooltip from "./InfoTooltip";
-import ProtectedRoute from "./ProtectedRoute";
-import * as Auth from "../utils/Auth";
-import imageOk from "../images/Image-OK.svg";
-import imageNg from "../images/image-NG.svg";
+import { useState, useEffect } from 'react';
+import '../index.css';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Api from '../utils/Api';
+import AddPlacePopup from './AddPlacePopup';
+import EditImagePopup from './EditImagePopup';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
+import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
+import * as Auth from '../utils/Auth';
+import imageOk from '../images/Image-OK.svg';
+import imageNg from '../images/image-NG.svg';
 
 function App() {
   const navigate = useNavigate();
@@ -29,22 +29,22 @@ function App() {
   const [elements, setElements] = useState([]);
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
-  const [image, setImage] = useState("");
-  const [title, setTitle] = useState("");
+  const [image, setImage] = useState('');
+  const [title, setTitle] = useState('');
   const [isEmail, setIsEmail] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
       Api.getUserInfo()
-        .then((avatar, name, about) => {
-          setCurrentUser(avatar, name, about);
+        .then((user) => {
+          setCurrentUser(user);
         })
         .catch((err) => {
           console.error(err);
         });
       Api.getInitialCards()
-        .then((data) => {
-          setElements(data);
+        .then((cards) => {
+          setElements(cards);
         })
         .catch((err) => {
           console.error(err);
@@ -53,27 +53,27 @@ function App() {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
+    const jwt = localStorage.getItem('jwt');
     if (jwt) {
       Auth.checkToken(jwt)
         .then((res) => {
           if (res) {
             setisLoggedIn(true);
-            navigate("/");
+            navigate('/');
             setIsInfoTooltip(false);
-            setIsEmail(res.data.email);
+            setIsEmail(res.email);
           }
         })
         .catch(() => {
           setImage(imageNg);
-          setTitle("Что-то пошло не так! Попробуйте ещё раз.");
+          setTitle('Что-то пошло не так! Попробуйте ещё раз.');
           handleOpenInfoTooltip();
         });
     }
   }, []);
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     if (!isLiked) {
       Api.addCardLike(card._id, !isLiked)
         .then((newCard) => {
@@ -161,14 +161,14 @@ function App() {
     Auth.register(email, password)
       .then(() => {
         setImage(imageOk);
-        setTitle("Вы успешно зарегистрировались!");
+        setTitle('Вы успешно зарегистрировались!');
         setisLoggedIn(true);
-        navigate("/signin");
+        navigate('/signin');
       })
       .catch((err) => {
         console.error(err);
         setImage(imageNg);
-        setTitle("Что-то пошло не так! Попробуйте ещё раз.");
+        setTitle('Что-то пошло не так! Попробуйте ещё раз.');
       })
       .finally(handleOpenInfoTooltip);
   };
@@ -176,25 +176,25 @@ function App() {
   const onLogin = (email, password) => {
     Auth.login(email, password)
       .then((res) => {
-        localStorage.setItem("jwt", res.token);
+        localStorage.setItem('jwt', res.token);
         setIsInfoTooltip(false);
         setisLoggedIn(true);
         handleEmail(email);
-        navigate("/");
+        navigate('/');
       })
       .catch((err) => {
         handleOpenInfoTooltip();
         setImage(imageNg);
-        setTitle("Что-то пошло не так! Попробуйте ещё раз.");
+        setTitle('Что-то пошло не так! Попробуйте ещё раз.');
         console.error(err);
       });
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem('jwt');
     setisLoggedIn(false);
     setIsEmail(false);
-    navigate("/signin");
+    navigate('/signin');
   };
 
   const handleEmail = (email) => {
@@ -212,17 +212,17 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
-        <div className="page__container">
+      <div className='page'>
+        <div className='page__container'>
           <Routes>
             <Route
-              path="/signup"
+              path='/signup'
               element={<Register onRegister={onRegister} />}
             />
-            <Route path="/signin" element={<Login onLogin={onLogin} />} />
+            <Route path='/signin' element={<Login onLogin={onLogin} />} />
             <Route
               exact
-              path="/"
+              path='/'
               element={
                 <>
                   <Header handleLogout={handleLogout} email={isEmail} />
@@ -242,8 +242,8 @@ function App() {
               }
             />
             <Route
-              path="*"
-              element={<Navigate to={isLoggedIn ? "/" : "/signin"} />}
+              path='*'
+              element={<Navigate to={isLoggedIn ? '/' : '/signin'} />}
             />
           </Routes>
 
