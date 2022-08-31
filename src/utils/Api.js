@@ -11,7 +11,7 @@ class Api {
     this._jwt = jwt;
     this._headers = {
       ...this._headers,
-      authorization: `Bearer ${this._token}`,
+      authorization: `Bearer ${this._jwt}`,
     };
   }
 

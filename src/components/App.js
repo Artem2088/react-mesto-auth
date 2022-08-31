@@ -176,6 +176,7 @@ function App() {
   const onLogin = (email, password) => {
     Auth.login(email, password)
       .then((res) => {
+        console.log(res);
         localStorage.setItem('jwt', res.token);
         setIsInfoTooltip(false);
         setisLoggedIn(true);
